@@ -1,6 +1,7 @@
 package br.com.dio.desafio.dominio;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,10 +26,7 @@ public class Dev {
     }
 
     public double calcularXp() {
-        return this.conteudosConcluidos
-                .stream()
-                .mapToDouble(Conteudo::calcularXp)
-                .sum();
+        return this.conteudosConcluidos.stream().mapToDouble(Conteudo::calcularXp).sum();
     }
 
     public String getNome() {
@@ -57,39 +55,19 @@ public class Dev {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-        result = prime * result + ((conteudosInscritos == null) ? 0 : conteudosInscritos.hashCode());
-        result = prime * result + ((conteudosConcluidos == null) ? 0 : conteudosConcluidos.hashCode());
-        return result;
+        return Objects.hash(nome, conteudosInscritos, conteudosConcluidos);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(Object o) {
+        if (this == o)
             return true;
-        if (obj == null)
+        if (o == null || getClass() != o.getClass())
             return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Dev other = (Dev) obj;
-        if (nome == null) {
-            if (other.nome != null)
-                return false;
-        } else if (!nome.equals(other.nome))
-            return false;
-        if (conteudosInscritos == null) {
-            if (other.conteudosInscritos != null)
-                return false;
-        } else if (!conteudosInscritos.equals(other.conteudosInscritos))
-            return false;
-        if (conteudosConcluidos == null) {
-            if (other.conteudosConcluidos != null)
-                return false;
-        } else if (!conteudosConcluidos.equals(other.conteudosConcluidos))
-            return false;
-        return true;
+
+        Dev that = (Dev) o;
+        return Objects.equals(this.nome, that.nome) && Objects.equals(this.conteudosInscritos, that.conteudosInscritos)
+                && Objects.equals(this.conteudosConcluidos, that.conteudosConcluidos);
     }
 
 }
